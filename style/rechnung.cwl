@@ -1,0 +1,46 @@
+# TeXstudio Konfigurationsdatei für Paket Rechnung
+\briefpapier{ein/aus}{Briefkopfgrafik}{Wasserzeichengrafik}#d
+\faltmarken{ein/aus}#d
+\schrifttyp{sans/roman}#d
+\sprache{de/en}#d
+\kundentabelle{ein/aus}#d
+\umsatzsteuer{Prozent}#d
+\firmenname{Name}#d
+\firmenzusatz{Namenszusatz}#d
+\firmenanschrift{Anschrift}#d
+\firmenort{PLZ Ort}#d
+\firmenland{Land}#d
+\firmenwww{Webseite}#d
+\firmenemail{Mail}#d
+\firmentel{Tel}#d
+\firmenfax{Fax}#d
+\firmenmobil{Mobil}#d
+\firmeniban{IBAN}#d
+\firmenbic{BIC}#d
+\firmenbank{Bank}#d
+\kundenname{Name}#d
+\kundenzusatz{Namenszusatz}#d
+\kundenanschrift{Anschrift}#d
+\kundenort{PLZ Ort}#d
+\kundenland{Land}#d
+\kundenkontakt{Kontaktperson}#d
+\kundentel{Tel}#d
+\kundenemail{Mail}#d
+\rechnungsdatum{Datum}#d
+\heute#d
+\rechnungsnummer{Nr}#d
+\ustnummer{ID}#d
+\begin{tableistung}#\env
+\end{tableistung}#\env
+\leistung{Beschreibung}{Zeitpunkt}{Stundenanzahl}{Stundensatz}#d
+\zwischensumme#d
+\begin{tabreise}#\env
+\end{tabreise}#\env
+\reise{Beschreibung}{Fahrtanzahl}{Entfernung}{Pauschale}#d
+\begin{tabnacht}#\env
+\end{tabnacht}#\env
+\nacht{Beschreibung}{Datum}{Betrag}#d
+\begin{tabsonstiges}#\env
+\end{tabsonstiges}#\env
+\sonstiges{Beschreibung}{Betrag}#d
+\gesamtbetrag{Teilbetrag}#d

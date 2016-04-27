@@ -1,0 +1,76 @@
+\documentclass[12pt,pdftex]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{style/rechnung}
+
+% Einstellungen
+\briefpapier		{ein}{style/bk.pdf}{style/wz.pdf}	% ein/aus, Briefkopf, Wasserzeichen
+\faltmarken			{ein}	% ein/aus
+\schrifttyp			{sans}	% sans/roman
+\sprache			{de}	% de/en
+\kundentabelle		{ein}	% ein/aus
+\umsatzsteuer		{19}	% Prozent
+
+% Firmendaten
+\firmenname			{Obelix GmbH \& Co. KG}
+\firmenzusatz		{}
+\firmenanschrift	{Am Steinbruch 1}
+\firmenort			{Kleines gallisches Dorf}
+\firmenland			{Aremorica}
+\firmenwww			{www.hinkelstein.ix}
+\firmenemail		{info@hinkelstein.ix}
+\firmentel			{1976\,/\,1978\,-\,0}
+\firmenfax			{1976\,/\,1978\,-\,23}
+\firmenmobil		{}
+\firmeniban			{IX11920518925000123}
+\firmenbic			{GENOIXH1AOI}
+\firmenbank			{Gallische Bank Lutetia}
+
+% Kundendaten
+\kundenname			{Hinkelsteininvest SE}
+\kundenzusatz		{- Abteilung Ankauf -}
+\kundenanschrift	{Lager 3}
+\kundenort			{1234 Laudanum}
+\kundenland			{Aremorica}
+\kundenkontakt		{Technokratus}
+\kundentel			{0123\,456789}
+\kundenemail		{technokratus@laudanum.rom}
+
+% Rechnungsdaten
+\rechnungsdatum		{21.04.1978}	% \heute = heutiges Datum
+\rechnungsnummer	{1978-001}
+\ustnummer			{IX918273645}
+
+% Rechnungstext
+\begin{document}
+
+Sehr geehrte Damen und Herren,
+
+ich erlaube mir entsprechend meiner erbrachten Leistung folgenden Betrag in Rechnung zu stellen:
+
+\vspace{10mm}
+
+\begin{tableistung}
+\leistung{Planung Hinkelstein}{02.1978}{14}{20}
+\leistung{Produktion Hinkelstein Prototyp\newline(Maßstab 1:10)}{02.1978}{6}{20}
+\leistung{Serienproduktion\newline(Charge 1 -- 25 Stück)}{03.1978}{125}{20}
+\end{tableistung}
+
+\zwischensumme
+
+\begin{tabreise}
+\reise{Gallisches Dorf--Lutetia}{1}{450}{0.3}
+\reise{Lutetia--Gallisches Dorf}{1}{450}{0.3}
+\end{tabreise}
+
+\begin{tabnacht}
+\nacht{Mannekenpix}{24.01.--25.01.1978}{65}
+\end{tabnacht}
+
+\begin{tabsonstiges}
+\sonstiges{Verladung}{100}
+\sonstiges{Lieferung ab Werk}{250}
+\end{tabsonstiges}
+
+\gesamtbetrag{}
+
+\end{document}

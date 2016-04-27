@@ -1,0 +1,489 @@
+% ---------------------------------------------------------------
+%	Titel:		Rechnungsvorlage
+%	Autor:	Christian Graul [christian.graul@gmail.com]
+%	Version:	1.1
+%	Datum:	2015-05-22
+%	Lizenz:	MIT-Lizenz
+% ---------------------------------------------------------------
+
+
+\NeedsTeXFormat{LaTeX2e}
+%\ProvidesPackage{style/rechnung}[2015/05/22 Rechnung Package]
+
+
+% --------------- Pakete laden ---------------------------------------------------------------------------------
+
+\RequirePackage[T1]{fontenc}				% Kodierung
+\RequirePackage{lmodern}				% Schrift
+\RequirePackage[ngerman, english]{babel}	% Sprachpaket
+\RequirePackage[margin=2cm]{geometry}		% Seitenraender
+\RequirePackage{graphicx}				% Grafiken
+\RequirePackage{tabularx}				% Tabellen
+\RequirePackage{fp}						% Rechnen
+\RequirePackage{environ}					% Tabellenumgebungen
+\RequirePackage{eurosym}				% Eurosymbol
+\RequirePackage{ifthen}					% If-Then
+\RequirePackage{datetime}				% Datumsformat
+\RequirePackage[letterspace=50]{microtype}	% Buchstabenabstand
+\RequirePackage{scrlayer-scrpage}			% Kopf- und Fusszeilen
+\RequirePackage{wallpaper}				% Hintergrundgrafiken
+
+
+% --------------- Einstellungen ---------------------------------------------------------------------------------
+
+\pdfoutput=1
+\pdfimageresolution=300
+\pdfcompresslevel=1
+\pdfinfo{
+  /Creator(TeX)
+  /Producer(PdfTeX)}
+
+\addtokomafont{pagefoot}{\normalfont\scriptsize}
+\clearpairofpagestyles
+\addtolength{\headheight}{25.0mm}
+\setlength{\textheight}{188.0mm}
+\setlength{\headsep}{15mm}
+\setlength{\footheight}{18mm}
+\setlength{\footskip}{35mm}
+\parindent 0.0mm
+\definecolor{grau}{gray}{.54}
+\definecolor{graublau}{RGB}{104, 115, 133}
+
+
+% --------------- Makros -----------------------------------------------------------------------------------------
+
+% Schriftgroesse
+\newcommand{\schriftgroesse}[1]{
+    \fontsize{#1}{1.2#1}\selectfont
+}
+
+% Schrifttyp
+\newcommand{\schrifttyp}[1]{
+  \ifthenelse{\equal{#1}{roman}}{
+    \renewcommand{\familydefault}{\rmdefault}
+  }{
+    \renewcommand{\familydefault}{\sfdefault}
+  }
+}
+
+% Sprache
+\newcommand{\sprache}[1]{
+  \ifthenelse{\equal{#1}{en}}{
+    \selectlanguage{english}
+    \RequirePackage[autolanguage]{numprint}
+    \def\rechnungtext{Invoice}
+    \def\datumtext{Date of invoice}
+    \def\heute{%
+      \ifthenelse{\number\day<10}{\def\dd{0\number\day}}{\def\dd{\number\day}}
+      \ifthenelse{\number\month<10}{\def\mm{0\number\month}}{\def\mm{\number\month}}
+      \number\year-\mm-\dd%
+    }
+    \def\rechnrtext{Invoice No}
+    \def\ustnrtext{VAT Reg No}
+    \def\empftext{Customer:}
+    \def\kontaktperstext{Contact}
+    \def\anschrifttext{Postal address}
+    \def\kontakttext{Contact}
+    \def\wwwtext{WWW:}
+    \def\emailtext{E-Mail:}
+    \def\teltext{Tel:}
+    \def\faxtext{Fax:}
+    \def\mobiltext{Mobile:}
+    \def\banktext{Bank details}
+    \def\ibantext{IBAN:}
+    \def\bictext{SWIFT:}
+    \def\bankorttext{Bank:}
+    \def\leistungtext{Description}
+    \def\zeitpunkttexta{}
+    \def\zeitpunkttextb{Realization}
+    \def\stundentext{Hours}
+    \def\satztexta{Hourly}
+    \def\satztextb{rate}
+    \def\betragtext{Amount}
+    \def\reisetext{Travel}
+    \def\fahrtentext{Quantity}
+    \def\entfernungtext{Distance}
+    \def\pauschaletext{Allowance}
+    \def\nachttext{Accommodation}
+    \def\nachtdattext{Date}
+    \def\sonstigestext{Other}
+    \def\zwischensumtext{Subtotal}
+    \def\uebertragtext{Carryover}
+    \def\nettosumtext{Net}
+    \def\usttext{VAT}
+    \def\bruttosumtext{Total amount}
+    \def\geztext{Already paid}
+    \def\resttext{Remaining amount}
+  }{
+    \selectlanguage{ngerman}
+    \RequirePackage{numprint}
+    \def\rechnungtext{Rechnung}
+    \def\datumtext{Rechnungsdatum}
+    \def\heute{%
+      \ifthenelse{\number\day<10}{\def\dd{0\number\day}}{\def\dd{\number\day}}
+      \ifthenelse{\number\month<10}{\def\mm{0\number\month}}{\def\mm{\number\month}}
+      \dd.\mm.\number\year%
+    }
+    \def\rechnrtext{Rechnungsnummer}
+    \def\ustnrtext{USt-IdNr.}
+    \def\empftext{Leistungsempf\"anger:}
+    \def\kontaktperstext{Kontaktperson}
+    \def\anschrifttext{Postanschrift}
+    \def\kontakttext{Kontaktinformation}
+    \def\wwwtext{WWW:}
+    \def\emailtext{E-Mail:}
+    \def\teltext{Tel:}
+    \def\faxtext{Fax:}
+    \def\mobiltext{Mobil:}
+    \def\banktext{Bankverbindung}
+    \def\ibantext{IBAN:}
+    \def\bictext{BIC:}
+    \def\bankorttext{Bank:}
+    \def\leistungtext{Leistungsbeschreibung}
+    \def\zeitpunkttexta{Zeitpunkt}
+    \def\zeitpunkttextb{der Leistung}
+    \def\stundentext{Stunden}
+    \def\satztexta{Stunden-}
+    \def\satztextb{Satz}
+    \def\betragtext{Betrag}
+    \def\reisetext{An-/Abreise}
+    \def\fahrtentext{Fahrten}
+    \def\entfernungtext{Entfernung}
+    \def\pauschaletext{Pauschale}
+    \def\nachttext{\"Ubernachtung}
+    \def\nachtdattext{Datum}
+    \def\sonstigestext{Sonstiges}
+    \def\zwischensumtext{Zwischensumme}
+    \def\uebertragtext{\"Ubertrag}
+    \def\nettosumtext{Summe Netto}
+    \def\usttext{Umsatzsteuer}
+    \def\bruttosumtext{Summe Brutto}
+    \def\geztext{Bereits gezahlt}
+    \def\resttext{Zu zahlender Restbetrag}
+  }
+} 
+
+% Briefpapier
+\newcommand{\briefpapier}[3]{
+  \ifthenelse{\equal{#1}{ein}}{
+    \ifthenelse{\equal{#2}{}}{}{\ihead{\includegraphics{#2}}}
+    \ifthenelse{\equal{#3}{}}{}{\LRCornerWallPaper{1}{#3}}
+  }{}
+}
+
+% Faltmarken
+\newcommand{\faltmarken}[1]{
+  \ifthenelse{\equal{#1}{ein}}{\def\marken{ein}}{\def\marken{aus}}
+}
+
+% Firmeninformationen
+\newcommand{\autor}[1]{\def\aut{#1}}
+\newcommand{\firmenname}[1]{\def\nameF{#1}}
+\newcommand{\firmenzusatz}[1]{\def\zusatzF{#1}}
+\newcommand{\firmenanschrift}[1]{\def\anschriftF{#1}}
+\newcommand{\firmenort}[1]{\def\ortF{#1}}
+\newcommand{\firmenland}[1]{\def\landF{#1}}
+\newcommand{\firmenwww}[1]{\def\wwwF{#1}}
+\newcommand{\firmenemail}[1]{\def\emailF{#1}}
+\newcommand{\firmentel}[1]{\def\telF{#1}}
+\newcommand{\firmenfax}[1]{\def\faxF{#1}}
+\newcommand{\firmenmobil}[1]{\def\mobilF{#1}}
+\newcommand{\firmeniban}[1]{\def\ibanF{#1}}
+\newcommand{\firmenbic}[1]{\def\bicF{#1}}
+\newcommand{\firmenbank}[1]{\def\bankF{#1}}
+
+% Kundeninformationen
+\newcommand{\kundenname}[1]{\def\nameK{#1}}
+\newcommand{\kundenzusatz}[1]{\def\zusatzK{#1}}
+\newcommand{\kundenanschrift}[1]{\def\anschriftK{#1}}
+\newcommand{\kundenort}[1]{\def\ortK{#1}}
+\newcommand{\kundenland}[1]{\def\landK{#1}}
+\newcommand{\kundenkontakt}[1]{\def\kontaktK{#1}}
+\newcommand{\kundentel}[1]{\def\telK{#1}}
+\newcommand{\kundenemail}[1]{\def\emailK{#1}}
+
+% Rechnungsinformationen
+\newcommand{\rechnungsdatum}[1]{\def\rdat{#1}}
+\newcommand{\rechnungsnummer}[1]{\def\rnr{#1}}
+\newcommand{\ustnummer}[1]{\def\ust{#1}}
+
+% Kundentabelle
+\newcommand{\kundentabelle}[1]{
+  \ifthenelse{\equal{#1}{ein}}{\def\kundentab{ein}}{\def\kundentab{aus}}
+}
+
+% Tabellenzeilenhoehe
+\newcommand\platz{\rule[-1.2ex]{0pt}{4ex}}%
+
+% Rechnungssumme
+\newcommand*\rsum{0}
+\newcommand*\rsumprint{0}
+\newcommand*\zwischensumme{
+  \nprounddigits{2}
+  \FPdiv\rsumprint\rsum{3}
+  \begin{tabularx}{\textwidth}{@{}X r r@{}}
+    \hline
+    \platz & \multicolumn{1}{r}{\zwischensumtext} & \numprint{\FPprint\rsumprint}\ \euro
+  \end{tabularx}
+  \newpage
+  \begin{tabularx}{\textwidth}{@{}X r@{}}
+    \platz & \multicolumn{1}{c}{\textbf{\uebertragtext}} \\
+    \hline
+    \platz & \numprint{\FPprint\rsumprint}\ \euro
+  \end{tabularx}
+  \npnoround
+  
+  \vspace{5mm}
+  
+}
+\newcommand{\umsatzsteuer}[1]{\def\umsatzst{#1}}
+\newcommand*\us{\umsatzst}
+\newcommand*\es{0}
+\newcommand*\gez{0}
+\newcommand*\rest{0}
+\newcommand*\gesamtbetrag[1]{
+  \nprounddigits{2}
+  \FPdiv\rsumprint\rsum{3}
+  \FPmul\us\us{.01}
+  \FPmul\us\us\rsumprint
+  \FPadd\es\rsumprint\us
+  \ifthenelse{\equal{#1}{}}{
+  \begin{tabularx}{\textwidth}{@{}X r r@{}}
+    \hline
+    \platz & \multicolumn{1}{r}{\nettosumtext} & \numprint{\FPprint\rsumprint}\ \euro \\
+    \platz & \multicolumn{1}{r}{\usttext\ \umsatzst\%} & \numprint{\FPprint\us}\ \euro \\
+    \cline{2-3}
+    \platz & \multicolumn{1}{r}{\textbf{\bruttosumtext}} & \textbf{\numprint{\FPprint\es}\ \euro}
+  \end{tabularx}}{%
+  \FPset\gez{#1}%
+  \FPsub\rest\es\gez
+  \begin{tabularx}{\textwidth}{@{}X r r@{}}
+    \hline
+    \platz & \multicolumn{1}{r}{\nettosumtext} & \numprint{\FPprint\rsumprint}\ \euro \\
+    \platz & \multicolumn{1}{r}{\usttext\ \umsatzst\%} & \numprint{\FPprint\us}\ \euro \\
+    \cline{2-3}
+    \platz & \multicolumn{1}{r}{\textbf{\bruttosumtext}} & \textbf{\numprint{\FPprint\es}\ \euro} \\[5mm]
+    \platz & \multicolumn{1}{r}{\geztext} & \numprint{\FPprint\gez}\ \euro \\
+    \cline{2-3}
+    \platz & \multicolumn{1}{r}{\textbf{\resttext}} & \textbf{\numprint{\FPprint\rest}\ \euro}
+  \end{tabularx}}
+  \npnoround
+  
+  \vspace{5mm}
+  
+}
+
+% Leistung Tabelleneintrag
+\newcommand*\leistA{}
+\newcommand*\leistB{}
+\newcommand*\leistC{}
+\newcommand{\leistung}[4]{
+  \FPset\a{#3}%
+  \FPset\b{#4}%
+  \FPmul\c\a\b
+  \FPround\a\a{1}%
+  \FPround\b\b{2}%
+  \FPround\c\c{2}%
+  \xdef\leistA{\a}%
+  \xdef\leistB{\b}%
+  \xdef\leistC{\c}%
+  \FPadd\rsum\rsum\c
+  \xdef\rsum{\rsum}%
+  {#1}&{#2}&{\numprint{\FPprint\leistA}}&{\numprint{\FPprint\leistB}\ \euro}&{\numprint{\FPprint\leistC}\ \euro}\\
+}
+
+% Leistungstabelle
+\NewEnviron{tableistung}{%
+  \def\temp{%
+    \begin{tabularx}{\textwidth}{@{}>\platz X c c c r@{}}
+     &\textbf{\zeitpunkttexta}& & \textbf{\satztexta} & \\[-1.5ex]
+    \textbf{\leistungtext} & \textbf{\zeitpunkttextb} & \textbf{\stundentext} & \textbf{\satztextb} & \multicolumn{1}{c}{\textbf{\betragtext}} \\
+    \hline}%
+    \expandafter\temp\BODY%
+    \end{tabularx}%
+    
+    \vspace{5mm}
+    
+}
+
+% Reise Tabelleneintrag
+\newcommand*\reiseC{}
+\newcommand*\reiseD{}
+\newcommand{\reise}[4]{
+  \FPset\a{#2}%
+  \FPset\b{#3}%
+  \FPset\c{#4}%
+  \FPmul\d\a\b
+  \FPmul\d\d\c
+  \FPround\c\c{2}%
+  \FPround\d\d{2}%
+  \xdef\reiseC{\c}%
+  \xdef\reiseD{\d}%
+  \FPadd\rsum\rsum\d
+  \xdef\rsum{\rsum}%
+  {#1}&{#2}&{#3\ km}&{\numprint{\FPprint\reiseC}\ \euro/km}&{\numprint{\FPprint\reiseD}\ \euro}\\
+}
+
+% Reisetabelle
+\NewEnviron{tabreise}{%
+  \def\temp{%
+    \begin{tabularx}{\textwidth}{@{}>\platz X c c c r@{}}
+    \textbf{\reisetext} & \textbf{\fahrtentext} & \textbf{\entfernungtext} & \textbf{\pauschaletext} & \multicolumn{1}{c}{\textbf{\betragtext}} \\
+    \hline}%
+    \expandafter\temp\BODY%
+    \end{tabularx}%
+    
+    \vspace{5mm}
+    
+}
+
+% Uebernachtung Tabelleneintrag
+\newcommand*\nachtA{}
+\newcommand{\nacht}[3]{
+  \FPset\a{#3}%
+  \FPround\a\a{2}%
+  \xdef\nachtA{\a}%
+  \FPadd\rsum\rsum\a
+  \xdef\rsum{\rsum}%
+  {#1}&{#2}&{\numprint{\FPprint\nachtA}\ \euro}\\
+}
+
+% Uebernachtungstabelle
+\NewEnviron{tabnacht}{%
+  \def\temp{%
+    \begin{tabularx}{\textwidth}{@{}>\platz X c r@{}}
+    \textbf{\nachttext} & \textbf{\nachtdattext} & \multicolumn{1}{c}{\textbf{\betragtext}} \\
+    \hline}%
+    \expandafter\temp\BODY%
+    \end{tabularx}%
+    
+    \vspace{5mm}
+    
+}
+
+% Sonstiges Tabelleneintrag
+\newcommand*\sonstA{}
+\newcommand{\sonstiges}[2]{
+  \FPset\a{#2}%
+  \FPround\a\a{2}%
+  \xdef\sonstA{\a}%
+  \FPadd\rsum\rsum\a
+  \xdef\rsum{\rsum}%
+  {#1}&{\numprint{\FPprint\sonstA}\ \euro}\\
+}
+
+% Sonstigestabelle
+\NewEnviron{tabsonstiges}{%
+  \def\temp{%
+    \begin{tabularx}{\textwidth}{@{}>\platz X r@{}}
+    \textbf{\sonstigestext} & \multicolumn{1}{c}{\textbf{\betragtext}} \\
+    \hline}%
+    \expandafter\temp\BODY%
+    \end{tabularx}%
+    
+    \vspace{5mm}
+    
+}
+
+% Betrag zu Gesamtbetrag hinzuaddieren
+\newcommand*\addA{}
+\newcommand{\addtotal}[1]{
+  \FPset\a{#1}%
+  \FPround\a\a{2}%
+  \xdef\addA{\a}%
+  \FPadd\rsum\rsum\a
+  \xdef\rsum{\rsum}%
+  \numprint{\FPprint\addA}
+}
+
+
+% --------------- Dokumentstart -------------------------------------------------------------------------------
+
+\AtBeginDocument{
+  % kleinerer Abstand zur Kopfzeile
+  \vspace*{-15mm}
+  
+  % Falt- und Lochermarken
+  \ifthenelse{\equal{\marken}{ein}}{
+    \setlength{\unitlength}{1mm}
+    \color{grau}
+    \begin{picture}(0,0)
+      \put(-20,-102.24){\line(1,0){4}}%oben= 45.2, unten=-251.68
+      \put(-20,-50.16){\line(1,0){3}}
+      \put(-20,-158.16){\line(1,0){3}}
+    \end{picture}
+    \color{black}
+  }{}
+  
+  % Adresse und Rechnungsdaten
+  \begin{minipage}[b]{.5\textwidth}%
+    \scriptsize\color{grau}\nameF \\[-.5em]
+    \anschriftF\ $\cdot$\ \ortF \\[.5em]
+    \normalsize\color{black}\textbf{\nameK} \\[1em]
+    \ifthenelse{\equal{\zusatzK}{}}{}{\zusatzK \\[.3em]}
+    \anschriftK \\[.3em]
+    \ortK
+    \ifthenelse{\equal{\landK}{}}{}{\\[.3em] \landK}
+  \end{minipage}%
+  \begin{minipage}[b]{.5\textwidth}%
+    \raggedleft{\color{graublau}\textbf{\textls{\rechnungtext}}\\[.5ex]
+    \setlength\fboxsep{.7mm}
+    \fcolorbox{graublau}{white}{\color{black}\begin{tabular}[b]{@{}lr@{}}%
+      \datumtext&\rdat     
+      \ifthenelse{\equal{\rnr}{}}{}{\\\rechnrtext&\rnr}
+      \ifthenelse{\equal{\ust}{}}{}{\\\ustnrtext&\ust}
+    \end{tabular}}}%
+  \end{minipage}
+  
+  \vspace{15mm}
+  
+  \ifthenelse{\equal{\kundentab}{ein}}{
+    \begin{tabularx}{\textwidth}{|X|X|}%
+      \hline
+      \underline{\empftext}	&	\underline{\kontaktperstext\ \nameK:} \\[1mm]
+      \nameK			&	\kontaktK \\
+      \anschriftK			&	\ifthenelse{\equal{\telK}{}}{}{\teltext\ \telK} \\
+      \ortK				&	\ifthenelse{\equal{\emailK}{}}{}{\emailtext\ \emailK} \\
+      \hline
+    \end{tabularx}%
+    
+    \vspace{15mm}
+    
+  }{}
+}% Ende AtBeginDocument
+
+
+% --------------- Dokumentende ------------------------------------------------------------------------------
+
+\AtEndDocument{
+  % Fusszeile
+  \cfoot{%
+    \color{grau}
+    \begin{tabular}[t]{@{}l@{}}%
+      \textbf{\anschrifttext} \\[.1em]
+      \ifthenelse{\equal{\zusatzF}{}}{}{\zusatzF \\}%
+      \ifthenelse{\equal{\anschriftF}{}}{}{\anschriftF \\}%
+      \ifthenelse{\equal{\ortF}{}}{}{\ortF \\}%
+      \ifthenelse{\equal{\landF}{}}{}{\landF \\}%
+    \end{tabular}%
+    \hfill
+    \begin{tabular}[t]{@{}l@{}l@{}}%
+      \multicolumn{2}{@{}l@{}}{\textbf{\kontakttext}} \\[.1em]
+      \ifthenelse{\equal{\wwwF}{}}{}{\wwwtext&\ \wwwF \\}%
+      \ifthenelse{\equal{\emailF}{}}{}{\emailtext&\ \emailF \\}%
+      \ifthenelse{\equal{\telF}{}}{}{\teltext&\ \telF \\}%
+      \ifthenelse{\equal{\faxF}{}}{}{\faxtext&\ \faxF \\}%
+      \ifthenelse{\equal{\mobilF}{}}{}{\mobiltext&\ \mobilF}%
+    \end{tabular}%
+    \hfill
+    \begin{tabular}[t]{@{}l@{}l@{}}%
+      \multicolumn{2}{@{}l@{}}{\textbf{\banktext}} \\[.1em]
+      \ifthenelse{\equal{\ibantext}{}}{}{\ibantext&\ \ibanF \\}%
+      \ifthenelse{\equal{\bictext}{}}{}{\bictext&\ \bicF \\}%
+      \ifthenelse{\equal{\bankorttext}{}}{}{\bankorttext&\ \bankF}%
+    \end{tabular}%
+  }
+}% Ende AtEndDocument
+
+\endinput
+%
