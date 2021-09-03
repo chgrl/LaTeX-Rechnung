@@ -5,7 +5,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{graphicx}
 \usepackage{tabularx}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \geometry{a4paper}
 \parindent 0.0mm
 \newcommand{\bs}{\symbol{'134}}
@@ -56,7 +56,7 @@ Zu Beginn der Vorlage werden grundlegende Einstellungen zum Dokument vorgenommen
 \end{verbatim}
 Mittels \Cmd{documentclass} wird die Dokumentklasse festgelegt. Als wichtige Optionen wird dabei auch die Basisschriftgröße, hier \emph{12pt}, gewählt. Durch entsprechende Anpassung kann diese Schriftgröße verändert werden.
 
-\Cmd{usepackage} läd Pakete und Styles in das Dokument. Mit dem Paket \emph{inputenc} wird die Kodierung der Datei angegeben. Die \LaTeX-Dateien müssen entsprechend kodiert sein, wobei \emph{utf8} aus Gründen der Plattformunabhängigkeit und des Zeichensatzes am zweckmäßigsten ist.
+\Cmd{usepackage} lädt Pakete und Styles in das Dokument. Mit dem Paket \emph{inputenc} wird die Kodierung der Datei angegeben. Die \LaTeX-Dateien müssen entsprechend kodiert sein, wobei \emph{utf8} aus Gründen der Plattformunabhängigkeit und des Zeichensatzes am zweckmäßigsten ist.
 
 In der dritten Zeile wird das hier dokumentierte Paket für die Rechnungsvorlage geladen. Dazu muss der relative oder absolute Pfad zur Styledatei angegeben werden. Liegt die Datei im Verzeichnis der Quelldatei, wird beim Aufruf nur der Dateiname \Cmd{usepackage\{rechnung\}} angegeben. Ansonsten wird der Pfad dem Namen vorangestellt. Achtung: Trennzeichen für den Pfad ist das unter Unix übliche /, nicht \textbackslash, wie unter Windows.
 
@@ -160,7 +160,7 @@ Als letztes werden nun im Dokumentkopf die Daten zur Rechnung angegeben. Diese e
 \ustnummer{IX918273645}
 \end{verbatim}
 
-Die Kommandos sind wieder selbsterklärend. Das Rechnungsdatum kann entweder statisch angegeben werden, z.\,B. als "21.04.1978". Oder es wird das Kommando \Cmd{heute} genutzt um das aktuelle Datum einzufügen.
+Die Kommandos sind wieder selbsterklärend. Das Rechnungsdatum kann entweder statisch angegeben werden, z.\,B. als ,,21.04.1978``. Oder es wird das Kommando \Cmd{heute} genutzt um das aktuelle Datum einzufügen.
 
 \section{Dokumentinhalt}
 
@@ -207,10 +207,8 @@ ich erlaube mir entsprechend meiner erbrachten Leistung folgenden Betrag in Rech
 \newpage
 
 Es sind vier Tabellentypen vordefiniert (Tabelle~\ref{tabtab}). Diese sind als Umgebungen angelegt, d.\,h. der Inhalt wird jeweils von \Cmd{begin}- und \Cmd{end}- Kommandos eingeschlossen. Die einzelnen Tabellenzeilen werden wiederum durch ein weiteres Kommando eingefügt.
-\begin{table}[htdp]
+\begin{table}[htbp]
 \caption{Tabellentypen}
-
-\vspace{-1em}
 
 \begin{center}
 \begin{tabular}{llll}
@@ -248,8 +246,6 @@ d)&\includegraphics[width=14.2cm]{sonsttab}
 Tabelle~\ref{zeiletab} zeigt eine Übersicht über die Argumente der Zeilen-Kommandos. Diese können innerhalb der jeweiligen Tabellenumgebung unbegrenzt oft eingesetzt werden. Auch die Tabellen\-umgebungen selbst können mehr als einmal eingefügt werden, um beispielsweise verschiedene detaillierte Leistungspakete in mehrere Tabellen aufzuteilen.
 \begin{table}[htb]
 \caption{Argumente der Zeilen-Kommandos}
-
-\vspace{-1em}
 
 \begin{center}
 \begin{tabular}{lllll}
