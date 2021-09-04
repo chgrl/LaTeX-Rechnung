@@ -183,6 +183,10 @@ ich erlaube mir entsprechend meiner erbrachten Leistung folgenden Betrag in Rech
 \leistung{Serienproduktion\newline(Charge 1 -- 25 Stück)}{03.1978}{125}{20}
 \end{tableistung}
 
+\begin{tabartikel}
+\artikel{Hinkelstein}{25}{30}
+\end{tabartikel}
+
 \zwischensumme
 
 \begin{tabreise}
@@ -219,6 +223,7 @@ tableistung&Leistungsabrechnung&\Cmd{leistung}&Abbildung~\ref{tab}a\\
 tabreise&Reiseabrechnung&\Cmd{reise}&Abbildung~\ref{tab}b\\
 tabnacht&Übernachtungsabrechnung&\Cmd{nacht}&Abbildung~\ref{tab}c\\
 tabsonstiges&Abrechnung Sonstiges&\Cmd{sonstiges}&Abbildung~\ref{tab}d\\
+tabartikel&Verkaufte Artikel&\Cmd{artikel}&Abbildung~\ref{tab}e\\
 \hline
 \end{tabular}
 \end{center}
@@ -232,13 +237,14 @@ tabsonstiges&Abrechnung Sonstiges&\Cmd{sonstiges}&Abbildung~\ref{tab}d\\
 a)&\includegraphics[width=14.2cm]{leisttab}\\[1.2em]
 b)&\includegraphics[width=14.2cm]{reisetab}\\[1.2em]
 c)&\includegraphics[width=14.2cm]{nachttab}\\[1.2em]
-d)&\includegraphics[width=14.2cm]{sonsttab}
+d)&\includegraphics[width=14.2cm]{sonsttab}\\[1.2em]
+e)&\includegraphics[width=14.2cm]{artiktab}
 \end{tabularx}
 }
 
 \vspace{-.5em}
 
-\caption{Tabellenbeispiele: a) tableistung, b) tabreise, c) tabnacht und d) tabsonstiges}
+\caption{Tabellenbeispiele: a) tableistung, b) tabreise, c) tabnacht, d) tabsonstiges und e) tabartikel}
 \label{tab}
 \end{center}
 \end{figure}
@@ -256,6 +262,7 @@ Kommando&Argument 1&Argument 2&Argument 3&Argument 4\\
 \Cmd{reise}&Reisebeschreibung&Fahrtanzahl&Entfernung&Pauschale\\
 \Cmd{nacht}&Unterkunft&Datum&Betrag&--\\
 \Cmd{sonstiges}&Beschreibung&Betrag&--&--\\
+\Cmd{artikel}&Beschreibung&St\"uckzahl&Einzelpreis&--\\
 \hline
 \end{tabular}
 \end{center}
