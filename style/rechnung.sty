@@ -13,20 +13,20 @@
 
 % --------------- Pakete laden ---------------------------------------------------------------------------------
 
-\RequirePackage[T1]{fontenc}				% Kodierung
-\RequirePackage{lmodern}				% Schrift
+\RequirePackage[T1]{fontenc}			% Kodierung
+\RequirePackage{lmodern}			% Schrift
 \RequirePackage[ngerman, english]{babel}	% Sprachpaket
 \RequirePackage[margin=2cm]{geometry}		% Seitenraender
-\RequirePackage{graphicx}				% Grafiken
-\RequirePackage{tabularx}				% Tabellen
-\RequirePackage{fp}						% Rechnen
-\RequirePackage{environ}					% Tabellenumgebungen
-\RequirePackage{eurosym}				% Eurosymbol
-\RequirePackage{ifthen}					% If-Then
-\RequirePackage{datetime}				% Datumsformat
+\RequirePackage{graphicx}			% Grafiken
+\RequirePackage{tabularx}			% Tabellen
+\RequirePackage{fp}				% Rechnen
+\RequirePackage{environ}			% Tabellenumgebungen
+\RequirePackage{eurosym}			% Eurosymbol
+\RequirePackage{ifthen}				% If-Then
+\RequirePackage{datetime}			% Datumsformat
 \RequirePackage[letterspace=50]{microtype}	% Buchstabenabstand
-\RequirePackage{scrlayer-scrpage}			% Kopf- und Fusszeilen
-\RequirePackage{wallpaper}				% Hintergrundgrafiken
+\RequirePackage{scrlayer-scrpage}		% Kopf- und Fusszeilen
+\RequirePackage{wallpaper}			% Hintergrundgrafiken
 
 
 % --------------- Einstellungen ---------------------------------------------------------------------------------
@@ -107,6 +107,9 @@
     \def\nachttext{Accommodation}
     \def\nachtdattext{Date}
     \def\sonstigestext{Other}
+    \def\artikeltext{Item}
+    \def\artikelstueck{Quantity}
+    \def\artikelpreis{Price}
     \def\zwischensumtext{Subtotal}
     \def\uebertragtext{Carryover}
     \def\nettosumtext{Net}
@@ -153,6 +156,9 @@
     \def\nachttext{\"Ubernachtung}
     \def\nachtdattext{Datum}
     \def\sonstigestext{Sonstiges}
+    \def\artikeltext{Artikel}
+    \def\artikelstueck{St\"uckzahl}
+    \def\artikelpreis{Einzelpreis}
     \def\zwischensumtext{Zwischensumme}
     \def\uebertragtext{\"Ubertrag}
     \def\nettosumtext{Summe Netto}
@@ -382,7 +388,33 @@
     \end{tabularx}%
     
     \vspace{5mm}
+}
+
+% Artikel Tabelleneintrag
+\newcommand*\artA{}
+\newcommand*\artB{}
+\newcommand{\artikel}[3]{
+  \FPset\a{#2}%
+  \FPset\b{#3}%
+  \FPmul\c\a\b
+  \FPround\b\b{2}%
+  \FPround\c\c{2}%
+  \xdef\artA{\b}%
+  \xdef\artB{\c}%
+  \FPadd\rsum\rsum\c
+  \xdef\rsum{\rsum}%
+  {#1}&{#2}&{\numprint{\FPprint\artA}\ \euro}&{\numprint{\FPprint\artB}\ \euro}\\
+}
+
+% Artikeltabelle
+\NewEnviron{tabartikel}{%
+  \def\temp{%
+    \begin{tabularx}{\textwidth}{@{}>\platz X c c r@{}}
+    \textbf{\artikeltext} & \textbf{\artikelstueck} & \textbf{\artikelpreis} & \multicolumn{1}{c}{\textbf{\betragtext}}\\\hline}%
+    \expandafter\temp\BODY%
+    \end{tabularx}%
     
+    \vspace{5mm}
 }
 
 % Betrag zu Gesamtbetrag hinzuaddieren
