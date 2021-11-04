@@ -379,10 +379,10 @@
 }
 
 % Sonstigestabelle
-\NewEnviron{tabsonstiges}{%
+\NewEnviron{tabsonstiges}[1][]{%
   \def\temp{%
     \begin{tabularx}{\textwidth}{@{}>\platz X r@{}}
-    \textbf{\sonstigestext} & \multicolumn{1}{c}{\textbf{\betragtext}} \\
+    \textbf{\ifthenelse{\equal{#1}{}}{\sonstigestext}{#1}} & \multicolumn{1}{c}{\textbf{\betragtext}} \\
     \hline}%
     \expandafter\temp\BODY%
     \end{tabularx}%
