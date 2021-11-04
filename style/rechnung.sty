@@ -114,9 +114,12 @@
     \def\uebertragtext{Carryover}
     \def\nettosumtext{Net}
     \def\usttext{VAT}
+    \def\stnrtext{Tax number}
     \def\bruttosumtext{Total amount}
     \def\geztext{Already paid}
     \def\resttext{Remaining amount}
+    \def\totaltext{Total amount}
+    \def\kleinunternehmer{Invoicing takes place without display of sales tax according to §19 UStG.}
   }{
     \selectlanguage{ngerman}
     \RequirePackage{numprint}
@@ -163,9 +166,12 @@
     \def\uebertragtext{\"Ubertrag}
     \def\nettosumtext{Summe Netto}
     \def\usttext{Umsatzsteuer}
+    \def\stnrtext{Steuernummer}
     \def\bruttosumtext{Summe Brutto}
     \def\geztext{Bereits gezahlt}
     \def\resttext{Zu zahlender Restbetrag}
+    \def\totaltext{Gesamtbetrag}
+    \def\kleinunternehmer{Gemäß §19 Abs.~1~UStG wird keine Umsatzsteuer ausgewiesen.}
   }
 } 
 
@@ -212,6 +218,7 @@
 \newcommand{\rechnungsdatum}[1]{\def\rdat{#1}}
 \newcommand{\rechnungsnummer}[1]{\def\rnr{#1}}
 \newcommand{\ustnummer}[1]{\def\ust{#1}}
+\newcommand{\steuernummer}[1]{\def\stnr{#1}}
 
 % Kundentabelle
 \newcommand{\kundentabelle}[1]{
@@ -254,25 +261,53 @@
   \FPmul\us\us\rsumprint
   \FPadd\es\rsumprint\us
   \ifthenelse{\equal{#1}{}}{
-  \begin{tabularx}{\textwidth}{@{}X r r@{}}
-    \hline
-    \platz & \multicolumn{1}{r}{\nettosumtext} & \numprint{\FPprint\rsumprint}\ \euro \\
-    \platz & \multicolumn{1}{r}{\usttext\ \umsatzst\%} & \numprint{\FPprint\us}\ \euro \\
-    \cline{2-3}
-    \platz & \multicolumn{1}{r}{\textbf{\bruttosumtext}} & \textbf{\numprint{\FPprint\es}\ \euro}
-  \end{tabularx}}{%
-  \FPset\gez{#1}%
-  \FPsub\rest\es\gez
-  \begin{tabularx}{\textwidth}{@{}X r r@{}}
-    \hline
-    \platz & \multicolumn{1}{r}{\nettosumtext} & \numprint{\FPprint\rsumprint}\ \euro \\
-    \platz & \multicolumn{1}{r}{\usttext\ \umsatzst\%} & \numprint{\FPprint\us}\ \euro \\
-    \cline{2-3}
-    \platz & \multicolumn{1}{r}{\textbf{\bruttosumtext}} & \textbf{\numprint{\FPprint\es}\ \euro} \\[5mm]
-    \platz & \multicolumn{1}{r}{\geztext} & \numprint{\FPprint\gez}\ \euro \\
-    \cline{2-3}
-    \platz & \multicolumn{1}{r}{\textbf{\resttext}} & \textbf{\numprint{\FPprint\rest}\ \euro}
-  \end{tabularx}}
+    % Keine Anzahlung geleistet
+    \ifthenelse{\umsatzst=0}{
+      % Keine Umsatzsteuer -> Kleinunternehmerregelung nach § 19 UStG
+      \begin{tabularx}{\textwidth}{@{}X r r@{}}
+        \hline
+        \platz & \multicolumn{1}{r}{\textbf{\totaltext}} & \textbf{\numprint{\FPprint\rsumprint}\ \euro}
+      \end{tabularx}\\[5mm]
+      \kleinunternehmer
+    }{
+      % Umsatzsteuer definiert -> Umsatzsteuer ausweisen
+      \begin{tabularx}{\textwidth}{@{}X r r@{}}
+        \hline
+        \platz & \multicolumn{1}{r}{\nettosumtext} & \numprint{\FPprint\rsumprint}\ \euro \\
+        \platz & \multicolumn{1}{r}{\usttext\ \umsatzst\%} & \numprint{\FPprint\us}\ \euro \\
+        \cline{2-3}
+        \platz & \multicolumn{1}{r}{\textbf{\bruttosumtext}} & \textbf{\numprint{\FPprint\es}\ \euro}
+      \end{tabularx}}
+  }{%
+    % Es wurde bereits eine Anzahlung geleistet
+    \ifthenelse{\umsatzst=0}{
+      % Keine Umsatzsteuer -> Kleinunternehmerregelung nach § 19 UStG
+      \FPset\gez{#1}%
+      \FPsub\rest\rsumprint\gez
+      \begin{tabularx}{\textwidth}{@{}X r r@{}}
+        \hline
+        \platz & \multicolumn{1}{r}{\textbf{\totaltext}} & \textbf{\numprint{\FPprint\rsumprint}\ \euro} \\[5mm]
+        \platz & \multicolumn{1}{r}{\geztext} & \numprint{\FPprint\gez}\ \euro \\
+        \cline{2-3}
+        \platz & \multicolumn{1}{r}{\textbf{\resttext}} & \textbf{\numprint{\FPprint\rest}\ \euro} \\[5mm]
+      \end{tabularx}\\[5mm]
+      \kleinunternehmer
+    }{
+      % Umsatzsteuer definiert -> keine Kleinunternehmerregelung
+      \FPset\gez{#1}%
+      \FPsub\rest\es\gez
+      \begin{tabularx}{\textwidth}{@{}X r r@{}}
+        \hline
+        \platz & \multicolumn{1}{r}{\nettosumtext} & \numprint{\FPprint\rsumprint}\ \euro \\
+        \platz & \multicolumn{1}{r}{\usttext\ \umsatzst\%} & \numprint{\FPprint\us}\ \euro \\
+        \cline{2-3}
+        \platz & \multicolumn{1}{r}{\textbf{\bruttosumtext}} & \textbf{\numprint{\FPprint\es}\ \euro} \\[5mm]
+        \platz & \multicolumn{1}{r}{\geztext} & \numprint{\FPprint\gez}\ \euro \\
+        \cline{2-3}
+        \platz & \multicolumn{1}{r}{\textbf{\resttext}} & \textbf{\numprint{\FPprint\rest}\ \euro}
+      \end{tabularx}
+    }%
+  }%
   \npnoround
   
   \vspace{5mm}
@@ -464,6 +499,7 @@
       \datumtext&\rdat     
       \ifthenelse{\equal{\rnr}{}}{}{\\\rechnrtext&\rnr}
       \ifthenelse{\equal{\ust}{}}{}{\\\ustnrtext&\ust}
+      \ifthenelse{\equal{\stnr}{}}{}{\\\stnrtext&\stnr}
     \end{tabular}}}%
   \end{minipage}
   

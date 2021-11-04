@@ -158,6 +158,7 @@ Als letztes werden nun im Dokumentkopf die Daten zur Rechnung angegeben. Diese e
 \rechnungsdatum{21.04.1978} % \heute = heutiges Datum
 \rechnungsnummer{1978-001}
 \ustnummer{IX918273645}
+\steuernummer{12/345/69789}
 \end{verbatim}
 
 Die Kommandos sind wieder selbsterklärend. Das Rechnungsdatum kann entweder statisch angegeben werden, z.\,B. als ,,21.04.1978``. Oder es wird das Kommando \Cmd{heute} genutzt um das aktuelle Datum einzufügen.
@@ -310,5 +311,10 @@ b)&\includegraphics[width=14.2cm]{teiltab}
 \label{gesamttab}
 \end{center}
 \end{figure}
+
+\subsubsection{Kleinunternehmerregelung nach §19 UStG}
+
+Kleinunternehmer dürfen nach § 19 UStG beim Ausstellen von Rechnungen keine Umsatzsteuer ausweisen sind jedoch verpflichtet den Grund für die fehlenden Umsatzsteuer-Angaben zu nennen. Dies wird automatisch umgesetzt wenn kein Umsatzsteuersatz angegeben wird: \verb+\umsatzsteuer {0}+
+Die Steuernummer kann mit \verb+\steuernummer {12/345/6789}+ gesetzt werden.
 
 \end{document}
