@@ -114,6 +114,7 @@
     \def\uebertragtext{Carryover}
     \def\nettosumtext{Net}
     \def\usttext{VAT}
+    \def\stnrtext{Tax number}
     \def\bruttosumtext{Total amount}
     \def\geztext{Already paid}
     \def\resttext{Remaining amount}
@@ -165,6 +166,7 @@
     \def\uebertragtext{\"Ubertrag}
     \def\nettosumtext{Summe Netto}
     \def\usttext{Umsatzsteuer}
+    \def\stnrtext{Steuernummer}
     \def\bruttosumtext{Summe Brutto}
     \def\geztext{Bereits gezahlt}
     \def\resttext{Zu zahlender Restbetrag}
@@ -216,6 +218,7 @@
 \newcommand{\rechnungsdatum}[1]{\def\rdat{#1}}
 \newcommand{\rechnungsnummer}[1]{\def\rnr{#1}}
 \newcommand{\ustnummer}[1]{\def\ust{#1}}
+\newcommand{\steuernummer}[1]{\def\stnr{#1}}
 
 % Kundentabelle
 \newcommand{\kundentabelle}[1]{
@@ -496,6 +499,7 @@
       \datumtext&\rdat     
       \ifthenelse{\equal{\rnr}{}}{}{\\\rechnrtext&\rnr}
       \ifthenelse{\equal{\ust}{}}{}{\\\ustnrtext&\ust}
+      \ifthenelse{\equal{\stnr}{}}{}{\\\stnrtext&\stnr}
     \end{tabular}}}%
   \end{minipage}
   
